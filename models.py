@@ -1,6 +1,5 @@
 from sqlalchemy import create_engine, Column, Integer, String, Text, ForeignKey
-from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy.orm import relationship
+from sqlalchemy.orm import relationship, declarative_base
 
 Base = declarative_base()
 
@@ -12,7 +11,7 @@ class User(Base):
     email = Column(String, unique=True)
     password = Column(String)
 
-    posts = relationship('Post', back_populates='user')
+    posts = relationship('Post', back_populates='users')
 
 class Post(Base):
     __tablename__ = 'posts'
@@ -20,9 +19,9 @@ class Post(Base):
     id = Column(Integer, primary_key=True, autoincrement=True)
     title = Column(String)
     content = Column(Text)
-    user_id = Column(Integer, ForeignKey('users.id'))
+    userid = Column(Integer, ForeignKey('users.id'))
 
-    user = relationship('User', back_populates='posts')
+    users = relationship('User', back_populates='posts')
 
 if __name__ == "__main__":
     engine = create_engine('sqlite:///database.db')

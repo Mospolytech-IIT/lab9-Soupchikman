@@ -2,23 +2,25 @@
 from fastapi import FastAPI, HTTPException, Depends, Form, Request
 from fastapi.responses import HTMLResponse
 from fastapi.templating import Jinja2Templates
-from sqlalchemy import create_engine
 from sqlalchemy.orm import Session, sessionmaker
-from models import User, Post
 
-#cd my_fastapi_project
+from models import User, Post
+from engine import getengine
+#cd my_fastapi_project\lab9
 #python -m uvicorn main:app --reload
 # http://127.0.0.1:8000/docs
 
 app = FastAPI()
 pages = Jinja2Templates(directory="pages")
 
-engine = create_engine('sqlite:///database.db')
-SessionLocal = sessionmaker(bind=engine)
+engine = getengine
+Session = sessionmaker(autoflush=False, bind=engine)
+db = Session()
+app = FastAPI()
 
 def get_db():
     """Зависимость для получения сессии базы данных."""
-    db = SessionLocal()
+    db = Session()
     try:
         yield db
     finally:
