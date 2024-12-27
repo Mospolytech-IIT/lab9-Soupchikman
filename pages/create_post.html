@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Create Post</title>
+</head>
+<body>
+    <form method="post">
+        <input type="text" name="title" placeholder="Title" value="{{ post.title if post else '' }}" required>
+        <textarea name="content" placeholder="Content" required>{{ post.content if post else '' }}</textarea>
+        <input type="number" name="user_id" placeholder="User ID" required>
+        <button type="submit">Submit</button>
+    </form>
+</body>
+</html>
