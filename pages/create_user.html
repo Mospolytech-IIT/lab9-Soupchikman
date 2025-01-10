@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Create User</title>
+</head>
+<body>
+    <form method="post">
+        <input type="text" name="username" placeholder="Username" value="{{ user.username if user else '' }}" required>
+        <input type="email" name="email" placeholder="Email" value="{{ user.email if user else '' }}" required>
+        <input type="password" name="password" placeholder="Password" required>
+        <button type="submit">Submit</button>
+    </form>
+</body>
+</html>
