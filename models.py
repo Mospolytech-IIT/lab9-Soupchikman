@@ -1,28 +1,25 @@
 from sqlalchemy import create_engine, Column, Integer, String, Text, ForeignKey
-from sqlalchemy.orm import relationship, declarative_base
+from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy.orm import sessionmaker, relationship
 
 Base = declarative_base()
 
 class User(Base):
     __tablename__ = 'users'
-
+    
     id = Column(Integer, primary_key=True, autoincrement=True)
-    username = Column(String, unique=True)
-    email = Column(String, unique=True)
-    password = Column(String)
+    username = Column(String, unique=True, nullable=False)
+    email = Column(String, unique=True, nullable=False)
+    password = Column(String, nullable=False)
 
-    posts = relationship('Post', back_populates='users')
+    posts = relationship('Post', back_populates='user')
 
 class Post(Base):
     __tablename__ = 'posts'
-
+    
     id = Column(Integer, primary_key=True, autoincrement=True)
-    title = Column(String)
-    content = Column(Text)
-    userid = Column(Integer, ForeignKey('users.id'))
+    title = Column(String, nullable=False)
+    content = Column(Text, nullable=False)
+    user_id = Column(Integer, ForeignKey('users.id'), nullable=False)
 
-    users = relationship('User', back_populates='posts')
-
-if __name__ == "__main__":
-    engine = create_engine('sqlite:///database.db')
-    Base.metadata.create_all(engine)
+    user = relationship('User', back_populates='posts')

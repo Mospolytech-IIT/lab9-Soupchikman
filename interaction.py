@@ -55,6 +55,8 @@ if __name__ == "__main__":
     updatedata(mysession)
     deletedata(mysession)
 
+    mysession.close()
+
 
 
 
